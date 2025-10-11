@@ -35,6 +35,36 @@ def validate_isbn(isbn: str) -> bool:
     if len(isbn_clean) == 13 and isbn_clean.isdigit():
         return True
     return False
+    
+def normalize_author_name(name: str) -> str:
+    """
+    Standardize an author’s name into 'Last, First' format.
+
+    Args:
+        name (str): Author name, possibly in various formats.
+
+    Returns:
+        str: Standardized name in 'Last, First' format.
+    """
+    if not name:
+        raise ValueError("Author name cannot be empty.")
+    parts = name.strip().split()
+    if len(parts) < 2:
+        return name.title()
+    return f"{parts[-1].title()}, {' '.join(p.title() for p in parts[:-1])}"
+
+def generate_unique_id(prefix: str = "DOC") -> str:
+    """
+    Generate a unique identifier for a document or record.
+
+    Args:
+        prefix (str): Optional prefix for ID (default 'DOC').
+
+    Returns:
+        str: Unique ID string.
+    """
+    return f"{prefix}-{uuid.uuid4().hex[:10].upper()}"
+
 
 # -=-=-=-=-=-=-=-=-=-=-=-
 # MEDIUM UTILITY FUNCTIONS
