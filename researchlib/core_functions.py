@@ -99,3 +99,44 @@ def merge_databases(local_db: List[Dict[str, Any]], remote_db: List[Dict[str, An
             if remote_time > local_time:
                 merged[identifier] = remote_item
     return list(merged.values())
+
+def index_research_by_keyword(documents: List[Dict[str, Any]]) -> Dict[str, List[str]]:
+    """
+    Create an inverted index of documents by keyword to optimize search.
+
+    Args:
+        documents (list): List of research documents.
+
+    Returns:
+        dict: Mapping of keywords to document identifiers.
+    """
+    index = {}
+    for doc in documents:
+        text_content = f"{doc.get('title', '')} {doc.get('abstract', '')}".lower()
+        words = re.findall(r"\b[a-z]{3,}\b", text_content)
+        for word in set(words):
+            index.setdefault(word, []).append(doc.get("identifier"))
+    return index
+
+def generate_universal_record(record: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Generate a standardized universal record compatible with other library systems.
+
+    Args:
+        record (dict): Original record with arbitrary metadata keys.
+
+    Returns:
+        dict: Normalized universal record structure.
+    """
+    mapping = {
+        "title": record.get("title") or record.get("name"),
+        "author": normalize_author_name(record.get("author", "Unknown")),
+        "year": record.get("year") or record.get("publication_date", "n.d."),
+        "identifier": record.get("identifier") or generate_unique_id(),
+        "keywords": record.get("keywords", []),
+        "abstract": record.get("abstract", ""),
+        "last_updated": datetime.now().strftime("%Y-%m-%d"),
+    }
+    if not mapping["title"] or not mapping["identifier"]:
+        raise ValueError("Record must contain a valid title and identifier.")
+    return mapping
