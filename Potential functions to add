@@ -3,7 +3,7 @@ Function names with (DONE) next to them are finished functions. Add your name ne
 - e.g:
 - def sample_function(test: str) -> str: (DONE)
 Functions with docstrings (that is, the comments in triple quotes [''' or """] ) are functions that aren't completed yet. 
-
+REFER TO THIS IF YOU WRITE CODE: https://peps.python.org/pep-0008/#descriptive-naming-styles
 
 # =======================
 # SIMPLE UTILITY FUNCTIONS (5–10 lines)
