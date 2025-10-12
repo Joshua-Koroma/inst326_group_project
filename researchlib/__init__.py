@@ -9,12 +9,11 @@ for libraries across institutions. It includes utilities for:
   - Citation generation
   - Database merging/indexing
   - Record normalization
-  - (*add anything else*) <-- delete before final turn-in
-
+  
   These functions serve as the basic layer toward higher-level components and
   database integrations within a universal library system.
 
-  Authors: ..., ..., Steven Ulloa : UMD INST326
+  Authors:  Joshua-Koroma, Steven Ulloa: UMD INST326
   Version: 1.0.0
   """
 
