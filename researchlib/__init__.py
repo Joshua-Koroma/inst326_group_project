@@ -13,35 +13,34 @@ for libraries across institutions. It includes utilities for:
   These functions serve as the basic layer toward higher-level components and
   database integrations within a universal library system.
 
-  Authors:  Joshua-Koroma, Steven Ulloa: UMD INST326
+  Authors:  Joshua-Koroma, Steven Ulloa, Ahmed: UMD INST326
   Version: 1.0.0
   """
 
 from .core_functions import(
     # --- Simple Utility Functions ---
-    validate_isbn,
-    #..., etc, etc,
+    validate_isbn, normalize_author_name, generate_unique_id
 
     # --- Medium Complexity Functions ---
+    
 
     # --- Complex Functions ---
-    merge_databases
+    merge_databases, index_research_by_keyword, generate_universal_record
 
   )
 
 _all_ = [
     # Simple
-    "validate_isbn",
-    #..., ..., ..., etc.
+    "validate_isbn", "normalize_author_name", "generate_unique_id"
 
     # Medium
 
     # Complex
-    "merge_databases" #,
+    "merge_databases", "index_research_by_keyword", "generate_universal_record"
 ]
 
 # Package Metadata
 __version__ = "1.0.0"
-__authors__ = "..., ..., Steven Ulloa : UMD INST326"
+__authors__ = "Joshua Koroma, Ahmed, Steven Ulloa : UMD INST326"
 __description__ = "A foundational function library for universal research and library data management."
 
