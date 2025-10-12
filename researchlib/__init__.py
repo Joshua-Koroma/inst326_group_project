@@ -19,10 +19,10 @@ for libraries across institutions. It includes utilities for:
 
 from .core_functions import(
     # --- Simple Utility Functions ---
-    validate_isbn, normalize_author_name, generate_unique_id
+    validate_isbn, normalize_author_name, generate_unique_i, sanitize_input, format_date,
 
     # --- Medium Complexity Functions ---
-    
+    parse_metadata, search_documents, generate_citation, validate_research_entry, export_to_json,
 
     # --- Complex Functions ---
     merge_databases, index_research_by_keyword, generate_universal_record
@@ -31,9 +31,10 @@ from .core_functions import(
 
 _all_ = [
     # Simple
-    "validate_isbn", "normalize_author_name", "generate_unique_id"
+    "validate_isbn", "normalize_author_name", "generate_unique_id", "sanitize_input", "format_date",
 
     # Medium
+    "parse_metadata", "search_documents", "generate_citation", "validate_research_entry", "export_to_json",
 
     # Complex
     "merge_databases", "index_research_by_keyword", "generate_universal_record"
