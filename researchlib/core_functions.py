@@ -99,7 +99,26 @@ def format_date(date_str: str) -> str:
 # MEDIUM UTILITY FUNCTIONS
 # =-=-=-=-=-=-=-=-=-=-=-=
 
-def parse_metadata(record: str) -> Dict[str, Any]:
+def parse_metadata(record: str) -> Dict[str, Any]: 
+
+    if not record:
+        raise ValueError("Metadata record cannot be empty.")
+    try:
+      return json.loads(record)
+    except json.JSONDecodeError:
+      metadata = {}
+
+      lines = record.strip().splitlines()
+
+      for line in lines:
+        if not line.strip():
+          continue
+        parts = line.split(":", 1)
+        if len(parts) == 2:
+          key, value = parts
+          metadata[key.strip()] = value.strip()
+    return metadata
+
     """
     Parse metadata from a JSON or key-value formatted string.
 
@@ -109,18 +128,6 @@ def parse_metadata(record: str) -> Dict[str, Any]:
     Returns:
         dict: Parsed metadata dictionary.
     """
-    if not record:
-        raise ValueError("Metadata record cannot be empty.")
-    try:
-        return json.loads(record)
-    except json.JSONDecodeError:
-        lines = record.strip().split("\n")
-        metadata = {}
-        for line in lines:
-            if ":" in line:
-                key, value = line.split(":", 1)
-                metadata[key.strip()] = value.strip()
-        return metadata
 
 
 def search_documents(query: str, documents: List[Dict[str, Any]], fields: Optional[List[str]] = None) -> List[Dict[str, Any]]:
