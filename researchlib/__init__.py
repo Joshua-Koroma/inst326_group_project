@@ -13,7 +13,7 @@ for libraries across institutions. It includes utilities for:
   These functions serve as the basic layer toward higher-level components and
   database integrations within a universal library system.
 
-  Authors:  Joshua-Koroma, Steven Ulloa, Ahmed: UMD INST326
+  Authors:  Joshua-Koroma, Steven Ulloa, Ahmed Baghdadi: UMD INST326
   Version: 1.0.0
   """
 
