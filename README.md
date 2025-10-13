@@ -77,5 +77,16 @@ pip install -e .
 Then you can use it anywhere:
 
 from researchlib import search_documents, generate_citation
+---
 
+## Domain Focus & Problem Statement
 
+Team members should follow these steps when contributing:
+
+Follow consistent naming conventions for files and functions (snake_case).
+
+Document your code.
+
+Use docstrings for every function and class.
+
+Update function_reference.md
