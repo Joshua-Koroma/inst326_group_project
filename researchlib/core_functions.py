@@ -67,9 +67,12 @@ def sanitize_input(data: str) -> str:
     Returns:
         str: Sanitized string.
     """
+
     if not isinstance(data, str):
-        raise TypeError("Input must be a string.")
-    return re.sub(r"[<>\"'%;()&+]", "", data).strip()
+        raise TypeError("Expected a string for input data.")
+    
+    blacklist = '<>"\'%;()&+'
+    return ''.join(c for c in data if c not in blacklist).strip()
 
 def format_date(date_str: str) -> str:
     date_str = "2025-10-12"
