@@ -171,16 +171,19 @@ def generate_citation(metadata: Dict[str, Any], style: str = "APA") -> str:
     Returns:
         str: Formatted citation string.
     """
-    author = metadata.get("author", "Unknown Author")
-    title = metadata.get("title", "Untitled")
-    year = metadata.get("year", "n.d.")
+    author = metadata.get("author") or "Unknown Author"
+    title = metadata.get("title") or "Untitled"
+    year = metadata.get("year") or "n.d."
 
-    if style.upper() == "APA":
+    style = style.upper()
+
+    if style == "APA":
         return f"{author} ({year}). {title}."
-    elif style.upper() == "MLA":
-        return f"{author}. \"{title}.\" {year}."
+    elif style == "MLA":
+        return f'{author}. "{title}." {year}.'
     else:
         raise ValueError(f"Unsupported citation style: {style}")
+
 
 
 def validate_research_entry(entry: Dict[str, Any]) -> bool:
@@ -214,7 +217,8 @@ def export_to_json(data: Any, filepath: str) -> None:
         with open(filepath, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=4, ensure_ascii=False)
     except Exception as e:
-        raise IOError(f"Failed to export data to {filepath}: {str(e)}")
+        raise IOError(f"Failed to export data to {filepath}: {e}")
+
 
 # -=-=-=-=-=-=-=-=-=-=-=-
 # COMPLEX FUNCTIONS
