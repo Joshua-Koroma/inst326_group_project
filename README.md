@@ -26,7 +26,7 @@ This package is part of the **Function Library Project (INST326)**, focusing on 
 | Ahmed | Quality Assurance | Testing, debugging, and code review |
 
 
-## 🎯 Domain Focus & Problem Statement
+## Domain Focus & Problem Statement
 
 Modern library systems rely on consistent data structures for tracking publications, citations, and digital library content. However, such systems often lack a simple, modular backend that validates and manages core research data consistently.
 
