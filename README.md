@@ -40,7 +40,7 @@ Institutions need a lightweight, extensible toolkit to handle:
 **Goal:**  
 `researchlib` solves this by providing a Python module that cleanly separates logic into reusable components. This module is meant to serve as a very simple universal basis, one that allows existing library systems to adapt and adopt this module.
 
-## Installation & Setup
+## ⚙️ Installation & Setup
 
 ### Option 1 — Local use
 
@@ -49,7 +49,11 @@ Clone or download the repository:
 ```bash
 git clone https://github.com/yourusername/researchlib.git
 cd researchlib
+```
 
+Make sure the structure looks like this:
+
+```
 Make sure the structure looks like this:
 
 inst326_group_project/
@@ -65,28 +69,93 @@ inst326_group_project/
 |  ├── README.md
 |  ├── function_reference.md
 |  └── usage_examples.md
+```
 
 You can run the demo directly:
-
+```bash
 python demo_script.py
+```
 
-Option 2 — Editable install (recommended for development)
+### Option 2 — Editable install (recommended for development)
 
+```bash
 pip install -e .
+```
 
 Then you can use it anywhere:
 
+```python
 from researchlib import search_documents, generate_citation
+```
+
 ---
 
-## Domain Focus & Problem Statement
+## Usage Examples
+
+Here are quick examples of how to use key functions.
+
+```python
+from researchlib import (
+    validate_isbn,
+    normalize_author_name,
+    search_documents,
+    generate_citation,
+    export_to_json,
+)
+
+# Validate an ISBN
+print(validate_isbn("978-3-16-148410-0"))  # True
+
+# Normalize author name
+print(normalize_author_name("DOE, JANE"))  # -> "Jane Doe"
+
+# Search documents by keyword
+results = search_documents("machine learning")
+print(results)
+
+# Generate formatted citation
+citation = generate_citation("Jane Doe", "AI Research", "2025")
+print(citation)
+
+# Export research data
+export_to_json(results, "output/research_data.json")
+```
+
+See [`usage_examples.md`](./usage_examples.md) for more in-depth examples.
+
+---
+
+---
+
+## Library Structure
+
+| Module | Description |
+|---------|--------------|
+| **`core_function.py`** | Implements main validation, search, and data processing functions |
+| **`__init__.py`** | Exposes public API for top-level imports |
+| **`demo_script.py`** | Sample runnable demonstration of all core functions |
+
+Each module is self-contained and follows encapsulation principles with private attributes where appropriate.
+
+---
+
+---
+
+## 🤝 Contribution Guidelines
 
 Team members should follow these steps when contributing:
 
-Follow consistent naming conventions for files and functions (snake_case).
+1. **Follow consistent naming conventions** for files and functions (snake_case).
 
-Document your code.
+2. **Document your code**:
+   - Use docstrings for every function and class.
+   - Update [`function_reference.md`](./function_reference.md) after adding or modifying functions.
 
-Use docstrings for every function and class.
+3. **Test locally** before committing:
+   ```bash
+   python demo_script.py
+   ```
 
-Update function_reference.md
+4. **Submit a pull request (PR)** with a clear summary of changes.
+
+---
