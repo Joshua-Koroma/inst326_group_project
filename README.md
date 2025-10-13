@@ -141,7 +141,7 @@ Each module is self-contained and follows encapsulation principles with private 
 
 ---
 
-## 🤝 Contribution Guidelines
+## Contribution Guidelines
 
 Team members should follow these steps when contributing:
 
