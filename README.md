@@ -45,18 +45,23 @@ Make sure the structure looks like this:
 Make sure the structure looks like this:
 
 inst326_group_project/
-│
 ├── researchlib/
 │   ├── __init__.py
-│   └── core_functions.py
-│
+│   ├── core_functions.py          
+│   └── researchlib_classes.py        
 ├── examples/
-|   └── demo_script.py
-|
-├──docs/
-|  ├── README.md
-|  ├── function_reference.md
-|  └── usage_examples.md
+│   ├── demo_script.py             
+│   └── class_examples.py            
+├── docs/                
+│   ├── function_reference.md      
+│   ├── usage_examples.md          
+│   ├── class_design.md            
+│   ├── api_reference.md           
+│
+│
+├── Potential functions to add     
+└── README.md                      
+
 ```
 
 You can run the demo directly:
@@ -128,7 +133,26 @@ Each module is self-contained and follows encapsulation principles with private 
 ---
 
 ---
+## researchLib: Core Classes
 
+This project transforms the original **Project 1 function library** into a cohesive **object-oriented architecture** for a modular **Digital Archives** and **Research Library Management System**.
+
+## Overview
+
+The system defines five core classes:
+| Class | Description |
+|-------|--------------|
+| `Author` | Represents an author with normalized names and optional ORCID ID. |
+| `Document` | Encapsulates metadata, validation, and citation logic for research documents. |
+| `Collection` | A container for `Document` objects with search, merge, and export support. |
+| `Indexer` | Builds an inverted keyword index for documents and collections. |
+| `ArchiveManager` | High-level coordinator managing multiple collections and bulk operations. |
+
+Each class integrates functions from the Project 1 core function library (validation, searching, metadata parsing, etc.) for seamless interoperability and future scalability.
+
+---
+
+---
 ## Contribution Guidelines
 
 Team members should follow these steps when contributing:
