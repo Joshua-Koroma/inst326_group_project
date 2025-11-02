@@ -77,3 +77,48 @@ record = {
 standard = generate_universal_record(record)
 print(standard)
 ```
+
+---
+
+## Class Examples
+
+
+```python
+"""
+Demonstration of core classes.
+Run with: python examples/demo_script.py
+"""
+
+from researchlib.digital_archives import Author, Document, Collection, ArchiveManager
+
+def main():
+    # Create an author and document
+    author = Author("Jane Doe", orcid="0000-0002-1234-5678")
+    doc = Document(
+        title="Librarianship in the Digital Age",
+        author=author.name,
+        identifier="9780306406157",
+        year="2021",
+        abstract="A discussion of digital transformation in archives."
+    )
+    doc.add_keyword("digital")
+    doc.add_keyword("archives")
+
+    # Create a collection and add the document
+    collection = Collection("Modern Library Science", "Research papers on digital archiving.")
+    collection.add_document(doc)
+
+    # Export collection
+    collection.export("examples/modern_library.json")
+
+    # Use ArchiveManager
+    manager = ArchiveManager()
+    manager.add_collection(collection)
+    manager.build_global_index()
+
+    print("Collections:", manager.list_collections())
+    print("Citation:", doc.generate_citation())
+    print("Universal Record:", doc.to_universal_record())
+
+if __name__ == "__main__":
+    main()
