@@ -132,7 +132,7 @@ Each module is self-contained and follows encapsulation principles with private 
 
 This project transforms the original **Project 1 function library** into a cohesive **object-oriented architecture** for a modular **Digital Archives** and **Research Library Management System**.
 
-## 📘 Overview
+## Overview
 
 The system defines five core classes:
 | Class | Description |
@@ -144,12 +144,6 @@ The system defines five core classes:
 | `ArchiveManager` | High-level coordinator managing multiple collections and bulk operations. |
 
 Each class integrates functions from the Project 1 core function library (validation, searching, metadata parsing, etc.) for seamless interoperability and future scalability.
-
----
-
-## ⚙️ File Structure
-
-
 
 ---
 
