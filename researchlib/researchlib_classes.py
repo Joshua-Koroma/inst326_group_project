@@ -516,3 +516,64 @@ class ArchiveManager:
 
     def __repr__(self) -> str:
         return f"ArchiveManager(collections={list(self._collections.keys())!r})"
+
+class Member:
+    """
+    Library member profile. Minimal PII
+    """
+    VALID_TYPES = {"student", "faculty", "staff", "guest"}
+    VALID_STATUS = {"active", "blocked", "expired"}
+
+    def __init__(self, name: str, email: str, member_type: str = "student",
+                 card_id: Optional[str] = None, status: str = "active"):
+        if not name or not isinstance(name, str):
+            raise ValueError("Member name must be a non-empty string.")
+        if not email or not isinstance(email, str):
+            raise ValueError("Email must be a non-empty string.")
+
+        self._name = sanitize_input(name)
+        self._email = sanitize_input(email)
+        self._type = member_type if member_type in self.VALID_TYPES else "student"
+        self._status = status if status in self.VALID_STATUS else "active"
+        self._card_id = card_id if card_id else generate_unique_id(prefix="CARD")
+        self._registered = datetime.now().strftime("%Y-%m-%d")
+        self._stats = {"checkouts": 0, "overdues": 0, "fines_outstanding": 0.0}
+
+    @property
+    def card_id(self) -> str:
+        return self._card_id
+
+    @property
+    def status(self) -> str:
+        return self._status
+
+    @property
+    def member_type(self) -> str:
+        return self._type
+
+    def block(self):
+        """temporarily disable member’s privs."""
+        self._status = "blocked"
+
+    def unblock(self):
+        """reinstate member’s privs."""
+        self._status = "active"
+
+    def to_dict(self) -> Dict[str, Any]:
+        """return a JSON ready representation of this member."""
+        return {
+            "name": self._name,
+            "email": self._email,
+            "type": self._type,
+            "status": self._status,
+            "card_id": self._card_id,
+            "registered": self._registered,
+            "stats": self._stats,
+        }
+
+    def __str__(self):
+        return f"Member: {self._name} ({self._type}) – {self._status}"
+
+    def __repr__(self):
+        return (f"Member(name={self._name!r}, email={self._email!r}, "
+                f"type={self._type!r}, status={self._status!r})")
