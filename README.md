@@ -10,8 +10,8 @@ This package is part of the **Function Library Project (INST326)**, focusing on 
 | Name | Role | Responsibilities |
 |------|------|------------------|
 | Steven Ulloa | Lead Developer | Core library structure, documentation, and examples |
-| Joshua Koroma| Data Validation Specialist | Implementation of validation utilities |
-| Ahmed | Quality Assurance | Testing, debugging, and code review |
+| Joshua Koroma | Data Validation Specialist | Implementation of validation utilities |
+| Ahmed Baghdadi | Quality Assurance | Testing, debugging, and code review |
 
 
 ## Domain Focus & Problem Statement
