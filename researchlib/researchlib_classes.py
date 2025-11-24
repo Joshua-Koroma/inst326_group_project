@@ -4,6 +4,9 @@ Depends on the provided utility functions.
 
 from typing import List, Dict, Any, Optional
 from datetime import datetime
+from abc import ABC, abstractmethod
+from typing import Dict, Optional
+
 
 # ----- Functions assumed available in the namespace -----
 # validate_isbn, normalize_author_name, generate_unique_id,
@@ -64,8 +67,39 @@ class Author:
     def __repr__(self) -> str:
         return f"Author(name={self._name!r}, orcid={self._orcid!r})"
 
+class BaseAuthor(ABC):
+    """Interface for all author-like objects in the library."""
 
-class Document:
+    @property
+    @abstractmethod
+    def name(self) -> str:
+        """Return the normalized author name."""
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def orcid(self) -> Optional[str]:
+        """Return the ORCID identifier or None."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def to_dict(self) -> Dict[str, Optional[str]]:
+        """Return a JSON-serializable dictionary of this author."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def __str__(self) -> str:
+        """Return a readable representation."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def __repr__(self) -> str:
+        """Return representation (for debugging)."""
+        raise NotImplementedError
+
+
+
+class Document(BaseDocument):
     """
     Representation of a research document / archival item.
 
@@ -249,7 +283,78 @@ class Document:
                 f"identifier={self._identifier!r}, year={self._year!r})")
 
 
-class Collection:
+class BaseDocument(ABC):
+    """
+    Abstract interface for all document-like objects in the library.
+    Ensures consistent metadata behavior and interoperability.
+    """
+
+    # ----- Required metadata properties -----
+
+    @property
+    @abstractmethod
+    def title(self) -> str:
+        """Return the normalized title."""
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def author(self) -> str:
+        """Return the normalized author name."""
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def identifier(self) -> str:
+        """Return the unique identifier."""
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def year(self) -> str:
+        """Return the publication year (or 'n.d.')."""
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def keywords(self) -> List[str]:
+        """Return list of keywords."""
+        raise NotImplementedError
+
+    # ----- Required core behaviors -----
+
+    @abstractmethod
+    def to_dict(self) -> Dict[str, Any]:
+        """Return a JSON-serializable representation."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def generate_citation(self, style: str = "APA") -> str:
+        """Generate a citation string."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def to_universal_record(self) -> Dict[str, Any]:
+        """Return a universal record mapping."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def validate(self) -> bool:
+        """Validate the document and return True if valid."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def __str__(self) -> str:
+        """readable representation."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def __repr__(self) -> str:
+        """Debug representation."""
+        raise NotImplementedError
+
+
+class Collection(BaseCollection):
     """
     A named collection of Documents.
 
@@ -347,6 +452,71 @@ class Collection:
 
     def __repr__(self) -> str:
         return f"Collection(name={self._name!r}, size={self.size})"
+
+class BaseCollection(ABC):
+    """
+    Abstract interface for document collections.
+    Ensures consistent behavior and interoperability across collection types.
+    """
+
+    @property
+    @abstractmethod
+    def name(self) -> str:
+        """Return the collection name."""
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def description(self) -> str:
+        """Return the collection description."""
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def size(self) -> int:
+        """Return the number of documents in the collection."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def add_document(self, doc) -> None:
+        """Add a document to the collection."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def remove_document(self, identifier: str):
+        """Remove and return a document by identifier."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def list_documents(self) -> List:
+        """Return all documents in the collection."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def find_by_identifier(self, identifier: str):
+        """Find a document by its identifier."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def search(self, query: str, fields: Optional[List[str]] = None) -> List:
+        """Search within the collection."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def export(self, filepath: str) -> None:
+        """Export the collection to a JSON file."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def merge_with(self, other: "BaseCollection") -> None:
+        """Merge another collection into this one."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def __str__(self) -> str:
+        """Human-readable representation."""
+        raise NotImplementedError
+
 
 
 class Indexer:
