@@ -517,9 +517,35 @@ class BaseCollection(ABC):
         """Human-readable representation."""
         raise NotImplementedError
 
+class BaseIndexer(ABC):
+    """
+    Abstract interface for indexers used to map keywords to document identifiers.
+    Ensures consistent search behavior and interoperability.
+    """
+
+    @property
+    @abstractmethod
+    def index(self) -> Dict[str, List[str]]:
+        """Return the keyword → identifiers mapping."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def search_keyword(self, keyword: str) -> List[str]:
+        """Return a list of identifiers matching the given keyword."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def __str__(self) -> str:
+        """Return a human-readable representation."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def __repr__(self) -> str:
+        """Return a debugging representation."""
+        raise NotImplementedError
 
 
-class Indexer:
+class Indexer(BaseIndexer):
     """
     Build and query a simple inverted index of Documents.
 
@@ -537,7 +563,7 @@ class Indexer:
         >>> idx.search_keyword('blue')
         ['ID-1']
     """
-    def __init__(self, index: Optional[Dict[str, List[str]]] = None):
+   def __init__(self, index: Optional[Dict[str, List[str]]] = None):
         self._index = index or {}
 
     @property
@@ -579,8 +605,35 @@ class Indexer:
     def __repr__(self) -> str:
         return f"Indexer(index_terms={len(self._index)})"
 
+class BaseArchiveManager(ABC):
+    """Abstract interface for archive manager components."""
 
-class ArchiveManager:
+    @abstractmethod
+    def add_collection(self, collection: Collection):
+        raise NotImplementedError
+
+    @abstractmethod
+    def remove_collection(self, name: str):
+        raise NotImplementedError
+
+    @abstractmethod
+    def list_collections(self) -> List[str]:
+        raise NotImplementedError
+
+    @abstractmethod
+    def build_global_index(self) -> BaseIndexer:
+        raise NotImplementedError
+
+    @abstractmethod
+    def __str__(self) -> str:
+        raise NotImplementedError
+
+    @abstractmethod
+    def __repr__(self) -> str:
+        raise NotImplementedError
+
+
+class ArchiveManager(BaseArchiveManager):
     """
     Manager / façade for collections and documents. Coordinates:
       - Collections
@@ -595,7 +648,7 @@ class ArchiveManager:
         >>> am.list_collections()
         ['Main']
     """
-    def __init__(self):
+     def __init__(self):
         self._collections: Dict[str, Collection] = {}
         self._global_index: Optional[Indexer] = None
 
@@ -687,7 +740,43 @@ class ArchiveManager:
     def __repr__(self) -> str:
         return f"ArchiveManager(collections={list(self._collections.keys())!r})"
 
-class Member:
+class BaseMember(ABC):
+    """Abstract interface for all library members."""
+
+    @property
+    @abstractmethod
+    def card_id(self) -> str:
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def status(self) -> str:
+        raise NotImplementedError
+
+    @abstractmethod
+    def block(self):
+        """Block the member."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def unblock(self):
+        """Unblock the member."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def to_dict(self) -> Dict[str, Any]:
+        """Return serializable representation."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def __str__(self) -> str:
+        raise NotImplementedError
+
+    @abstractmethod
+    def __repr__(self) -> str:
+        raise NotImplementedError
+
+class Member(BaseMember):
     """
     Library member profile. Minimal PII
     """
