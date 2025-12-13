@@ -58,8 +58,7 @@ inst326_group_project/
 │   ├── class_design.md            
 │   ├── api_reference.md           
 │
-│
-├── Potential functions to add     
+│    
 └── README.md                      
 
 ```
