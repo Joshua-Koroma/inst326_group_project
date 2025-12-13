@@ -1,11 +1,10 @@
 """researchlib_classes.py
 Depends on the provided utility functions.
 """
-
+import json
 from typing import List, Dict, Any, Optional
 from datetime import datetime
 from abc import ABC, abstractmethod
-from typing import Dict, Optional
 
 
 # ----- Functions assumed available in the namespace -----
@@ -288,9 +287,6 @@ class BaseDocument(ABC):
     Abstract interface for all document-like objects in the library.
     Ensures consistent metadata behavior and interoperability.
     """
-
-    # ----- Required metadata properties -----
-
     @property
     @abstractmethod
     def title(self) -> str:
@@ -320,8 +316,6 @@ class BaseDocument(ABC):
     def keywords(self) -> List[str]:
         """Return list of keywords."""
         raise NotImplementedError
-
-    # ----- Required core behaviors -----
 
     @abstractmethod
     def to_dict(self) -> Dict[str, Any]:
@@ -836,3 +830,67 @@ class Member(BaseMember):
     def __repr__(self):
         return (f"Member(name={self._name!r}, email={self._email!r}, "
                 f"type={self._type!r}, status={self._status!r})")
+
+class APACitationGenerator:
+    """
+    Generates an APA-style citation from structured JSON metadata
+    and returns the citation as a JSON-compatible dict.
+    """
+
+    def __init__(self, metadata: Dict[str, Any]):
+        if not isinstance(metadata, dict):
+            raise TypeError("Metadata must be a dictionary.")
+        self.metadata = metadata
+
+    def generate(self) -> Dict[str, str]:
+        """
+        Generate an APA citation and return it as JSON data.
+        """
+        citation = self._build_apa_citation()
+        return {
+            "style": "APA",
+            "citation": citation
+        }
+
+    def _format_authors(self, authors: List[str]) -> str:
+        """
+        Format authors according to APA rules.
+        """
+        if not authors:
+            return "Unknown Author"
+
+        formatted = []
+        for name in authors:
+            parts = name.strip().split()
+            last = parts[-1]
+            initials = [p[0].upper() + "." for p in parts[:-1]]
+            formatted.append(f"{last}, {' '.join(initials)}")
+
+        if len(formatted) == 1:
+            return formatted[0]
+        elif len(formatted) == 2:
+            return f"{formatted[0]}, & {formatted[1]}"
+        else:
+            return ", ".join(formatted[:-1]) + f", & {formatted[-1]}"
+
+    def _build_apa_citation(self) -> str:
+        """
+        Build the APA citation string.
+        """
+        authors = self.metadata.get("authors", [])
+        year = self.metadata.get("year", "n.d.")
+        title = self.metadata.get("title", "Untitled").capitalize()
+        publisher = self.metadata.get("publisher")
+        doi = self.metadata.get("doi")
+
+        author_str = self._format_authors(authors)
+
+        citation = f"{author_str} ({year}). {title}."
+
+        if publisher:
+            citation += f" {publisher}."
+
+        if doi:
+            citation += f" {doi}"
+
+        return citation.strip()
