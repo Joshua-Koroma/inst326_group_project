@@ -114,7 +114,7 @@ print(citation)
 export_to_json(results, "output/research_data.json")
 ```
 
-See [`usage_examples.md`](./usage_examples.md) for more in-depth examples.
+See [`usage_examples.md`](./usage_examples.md) for more in-depth examples. Or, you can just check out our application script to see it in action.
 
 ---
 
