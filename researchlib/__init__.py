@@ -41,7 +41,7 @@ _all_ = [
 ]
 
 # Package Metadata
-__version__ = "1.0.0"
+__version__ = "1.0.5"
 __authors__ = "Joshua Koroma, Ahmed Baghdadi, Steven Ulloa : UMD INST326"
 __description__ = "A foundational function library for universal research and library data management."
 
