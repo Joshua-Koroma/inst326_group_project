@@ -4,10 +4,6 @@ import uuid
 from datetime import datetime
 from typing import List, Dict, Any, Optional
 
-# -=-=-=-=-=-=-=-=-=-=-=-
-# SIMPLE UTILITY FUNCTIONS
-# =-=-=-=-=-=-=-=-=-=-=-=
-
 def validate_isbn(isbn: str) -> bool:
     """
     Validate if the given string is a valid ISBN-10 or ISBN-13 format.
@@ -26,7 +22,6 @@ def validate_isbn(isbn: str) -> bool:
     if len(isbn_clean) == 13 and isbn_clean.isdigit():
         return True
     return False
-
 
 def normalize_author_name(name: str) -> str:
     """
@@ -90,10 +85,6 @@ def format_date(date_str: str) -> str:
         except ValueError:
             raise ValueError("Date format not recognized. Use MM/DD/YYYY or YYYY-MM-DD.")
 
-# -=-=-=-=-=-=-=-=-=-=-=-
-# MEDIUM UTILITY FUNCTIONS
-# =-=-=-=-=-=-=-=-=-=-=-=
-
 def parse_metadata(record: str) -> Dict[str, Any]:
 
     if not record:
@@ -124,7 +115,6 @@ def parse_metadata(record: str) -> Dict[str, Any]:
         dict: Parsed metadata dictionary.
     """
 
-
 def search_documents(query: str, documents: List[Dict[str, Any]], fields: Optional[List[str]] = None) -> List[Dict[str, Any]]:
     """
     Search documents for a query string across specified fields.
@@ -151,7 +141,6 @@ def search_documents(query: str, documents: List[Dict[str, Any]], fields: Option
                 break
     return results
 
-
 def generate_citation(metadata: Dict[str, Any], style: str = "APA") -> str:
     """
     Generate a formatted citation string based on metadata.
@@ -166,17 +155,29 @@ def generate_citation(metadata: Dict[str, Any], style: str = "APA") -> str:
     author = metadata.get("author") or "Unknown Author"
     title = metadata.get("title") or "Untitled"
     year = metadata.get("year") or "n.d."
-
     style = style.upper()
-
+    citation = ""
     if style == "APA":
-        return f"{author} ({year}). {title}."
+        citation = f"{author} ({year}). {title}."
     elif style == "MLA":
-        return f'{author}. "{title}." {year}.'
+        citation = f'{author}. "{title}." {year}.'
     else:
         raise ValueError(f"Unsupported citation style: {style}")
+    saved_citations = open('saved_citations.txt', 'a')
+    saved_citations.write(citation + "\n")
+    saved_citations.close()
+    return citation
 
-
+def retrieve_citations():
+    saved_citations = open('saved_citations.txt', 'r')
+    first_char = saved_citations.read(1)
+    saved_citations.close()
+    saved_citations = open('saved_citations.txt', 'r')
+    if not first_char:
+        print ("No past citations saved.")
+    else:
+        print(saved_citations.read())
+    saved_citations.close()
 
 def validate_research_entry(entry: Dict[str, Any]) -> bool:
     """

@@ -1,4 +1,9 @@
-from researchlib.digital_archives import Author, Document, Collection, ArchiveManager, APACitationGenerator
+import json
+import sys
+import os
+sys.path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+from researchlib.researchlib_classes import Author, Document, Collection, ArchiveManager, APACitationGenerator
 
 # Create author and document
 author = Author("Ada Lovelace")

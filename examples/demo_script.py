@@ -5,8 +5,12 @@ Demonstrates key functionalities of the researchlib package,
 including data validation, search, citation generation,
 database synchronization, and JSON export.
 """
+import sys
+import os
+sys.path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
-from researchlib import (
+from researchlib.core_functions import (
     validate_isbn,
     normalize_author_name,
     generate_unique_id,
@@ -17,9 +21,10 @@ from researchlib import (
     generate_citation,
     validate_research_entry,
     export_to_json,
-    synchronize_databases,
+    merge_databases,
     index_research_by_keyword,
-    generate_universal_record
+    generate_universal_record,
+    retrieve_citations
 )
 
 # ----------------------------
@@ -77,6 +82,9 @@ mla_citation = generate_citation(metadata, "MLA")
 print("APA:", apa_citation)
 print("MLA:", mla_citation)
 
+print("\n=== Retrieve Citations from our savefile. ===")
+retrieve_citations()
+
 # ----------------------------
 # STEP 4: Search documents
 # ----------------------------
@@ -108,7 +116,7 @@ remote_db = [
     {"identifier": "9780201616224", "last_updated": "2025-02-10", "title": "Ethics in AI"}
 ]
 
-merged = synchronize_databases(local_db, remote_db)
+merged = merge_databases(local_db, remote_db)
 print("Merged database:")
 for entry in merged:
     print(f"- {entry['identifier']}: {entry['title']} (Updated {entry.get('last_updated')})")
