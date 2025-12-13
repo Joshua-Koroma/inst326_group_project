@@ -873,6 +873,56 @@ class APACitationGenerator:
         else:
             return ", ".join(formatted[:-1]) + f", & {formatted[-1]}"
 
+    class APACitationGenerator:
+    """
+    Generates an APA-style citation from structured JSON metadata
+    and returns the citation as a JSON-compatible dict.
+    """
+
+    def __init__(self, metadata: Dict[str, Any]):
+        if not isinstance(metadata, dict):
+            raise TypeError("Metadata must be a dictionary.")
+        self.metadata = metadata
+
+    # -----------------------
+    # Public API
+    # -----------------------
+
+    def generate(self) -> Dict[str, str]:
+        """
+        Generate an APA citation and return it as JSON data.
+        """
+        citation = self._build_apa_citation()
+        return {
+            "style": "APA",
+            "citation": citation
+        }
+
+    # -----------------------
+    # Internal helpers
+    # -----------------------
+
+    def _format_authors(self, authors: List[str]) -> str:
+        """
+        Format authors according to APA rules.
+        """
+        if not authors:
+            return "Unknown Author"
+
+        formatted = []
+        for name in authors:
+            parts = name.strip().split()
+            last = parts[-1]
+            initials = [p[0].upper() + "." for p in parts[:-1]]
+            formatted.append(f"{last}, {' '.join(initials)}")
+
+        if len(formatted) == 1:
+            return formatted[0]
+        elif len(formatted) == 2:
+            return f"{formatted[0]}, & {formatted[1]}"
+        else:
+            return ", ".join(formatted[:-1]) + f", & {formatted[-1]}"
+
     def _build_apa_citation(self) -> str:
         """
         Build the APA citation string.
