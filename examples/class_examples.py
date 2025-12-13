@@ -1,4 +1,4 @@
-from researchlib.digital_archives import Author, Document, Collection, ArchiveManager
+from researchlib.digital_archives import Author, Document, Collection, ArchiveManager, APACitationGenerator
 
 # Create author and document
 author = Author("Ada Lovelace")
@@ -15,3 +15,15 @@ collection.export("computing_collection.json")
 manager = ArchiveManager()
 manager.add_collection(collection)
 print(manager.list_collections())
+
+# Import/Export Citations in APA Format
+input_json = {
+    "authors": ["Jane Doe", "John Smith"],
+    "year": 2021,
+    "title": "understanding widgets",
+    "publisher": "Widget Press",
+    "doi": "https://doi.org/10.1234/widget.2021"
+}
+generator = APACitationGenerator(input_json)
+output_json = generator.generate()
+print(json.dumps(output_json, indent=4))
