@@ -27,7 +27,7 @@ def validate_isbn(isbn: str) -> bool:
         return True
     return False
 
-    
+
 def normalize_author_name(name: str) -> str:
     """
     Standardize an author’s name into 'Last, First' format.
@@ -70,19 +70,11 @@ def sanitize_input(data: str) -> str:
 
     if not isinstance(data, str):
         raise TypeError("Expected a string for input data.")
-    
-    blacklist = '<>"\'%;()&+'
+
+    blacklist = '<>"\'%();&+'
     return ''.join(c for c in data if c not in blacklist).strip()
 
 def format_date(date_str: str) -> str:
-    date_str = "2025-10-12"
-
-    dt = datetime.striptime(date_str, "%Y-%m-%d")
-
-    iso_date = dt.date().isoformat()
-
-    return iso_date
-
     """
     Args:
         date_str (str): Date string in various common formats.
@@ -102,7 +94,7 @@ def format_date(date_str: str) -> str:
 # MEDIUM UTILITY FUNCTIONS
 # =-=-=-=-=-=-=-=-=-=-=-=
 
-def parse_metadata(record: str) -> Dict[str, Any]: 
+def parse_metadata(record: str) -> Dict[str, Any]:
 
     if not record:
         raise ValueError("Metadata record cannot be empty.")
@@ -138,7 +130,7 @@ def search_documents(query: str, documents: List[Dict[str, Any]], fields: Option
     Search documents for a query string across specified fields.
 
     Args:
-        query (str): Search query.
+        query (str):
         documents (list): List of document dictionaries.
         fields (list, optional): Specific fields to search in.
 
