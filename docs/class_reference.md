@@ -57,7 +57,7 @@ Each class encapsulates related data and behavior, supporting scalability and re
 ---
 
 ### 5. ArchiveManager
-- **Responsibility**: High-level façade to manage collections and coordinate indexing.
+- **Responsibility**: High-level, manage collections and coordinate indexing.
 - **Integrates**: `merge_databases()`, `generate_universal_record()`
 - **Key Methods**:
   - `build_global_index()`
