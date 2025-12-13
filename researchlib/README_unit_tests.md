@@ -54,16 +54,13 @@ Make sure you are in the project root directory and that all required modules ar
 
 ### Run all tests:
 ```bash
-python -m unittest test_filename.py
+python -m unittest test_citations.py
 ```
 
 Or run directly:
 ```bash
-python test_filename.py
+python test_citations.py
 ```
-
-Replace `test_filename.py` with the actual name of the test file.
-
 ---
 
 ## Requirements
