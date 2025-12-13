@@ -78,5 +78,7 @@ Replace `test_filename.py` with the actual name of the test file.
 - These tests assume deterministic citation formatting.
 - If citation styles or formatting rules change, expected values in the tests must be updated accordingly.
 - The test file can be safely extended to include additional citation styles or validation logic.
+- Unit tests were focused on the main function of the package. Given the core functions pass, and the main citation generator passes, we assume all other instances or introduced classes will work given
+- the current functions available.
 
 ---
