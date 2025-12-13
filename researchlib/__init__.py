@@ -14,7 +14,7 @@ for libraries across institutions. It includes utilities for:
   database integrations within a universal library system.
 
   Authors:  Joshua-Koroma, Steven Ulloa, Ahmed Baghdadi: UMD INST326
-  Version: 1.0.0
+  Version: 1.0.5
   """
 
 from .core_functions import(
