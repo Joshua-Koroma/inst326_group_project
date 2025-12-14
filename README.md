@@ -3,7 +3,7 @@
 `researchlib` is a lightweight Python package designed to support academic and digital library management tasks. It provides clean, well-structured utilities for validating research data, managing bibliographic metadata, generating unique record identifiers, and exporting or synchronizing datasets between systems.
 
 This package is part of the **Function Library Project (INST326)**, focusing on encapsulation and data validation principles.
-
+You can see a video made about the package, dev process, and functionality here: https://drive.google.com/file/d/1tWBqDJP9sqsy36dkd6NJHy9hp9_88KOx/view?usp=sharing 
 
 ## Team Members & Roles
 
